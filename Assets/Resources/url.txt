@@ -1,0 +1,1 @@
+http://api.v3.factual.com/t/places?geo={%22$circle%22:{%22$center%22:[48.891986,2.319287],%22$meters%22:%205000}}&filters={"category_ids":{"$includes":107}}&KEY=[REDACTED]

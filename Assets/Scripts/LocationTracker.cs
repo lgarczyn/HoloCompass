@@ -6,6 +6,9 @@ public class LocationTracker : MonoBehaviour
 {
 	public Text text;
 
+	static public Vector3 position;
+	static public Vector3 rotation;
+
 	void Start()
 	{
 		//Use real GPS?
@@ -26,6 +29,10 @@ public class LocationTracker : MonoBehaviour
 		else
 			Debug.Log (log);
 
+		position.x = Input.location.lastData.longitude;
+		position.y = Input.location.lastData.latitude;
+		position.z = Input.location.lastData.altitude;
+		rotation.z = Input.compass.trueHeading;
 	}
 
 }
