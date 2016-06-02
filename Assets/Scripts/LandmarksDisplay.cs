@@ -37,7 +37,9 @@ public class LandmarksDisplay : MonoBehaviour
 	void Update()
 	{
 		camera.transform.position = GetWorldCoordinates (LocationTracker.longitude, LocationTracker.altitude, LocationTracker.latitude);
-		camera.transform.rotation = Quaternion.Euler (LocationTracker.rotation + rotOffset);
+		//camera.transform.rotation = Quaternion.Euler (LocationTracker.rotation + rotOffset);
+		camera.transform.rotation = Input.gyro.attitude;
+
 	}
 
 
