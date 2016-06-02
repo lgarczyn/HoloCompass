@@ -6,7 +6,9 @@ public class LocationTracker : MonoBehaviour
 {
 	public Text text;
 
-	static public Vector3 position;
+	static public float longitude;
+	static public float latitude;
+	static public float altitude;
 	static public Vector3 rotation;
 
 	void Start()
@@ -29,10 +31,10 @@ public class LocationTracker : MonoBehaviour
 		else
 			Debug.Log (log);
 
-		position.x = Input.location.lastData.longitude;
-		position.y = Input.location.lastData.latitude;
-		position.z = Input.location.lastData.altitude;
-		rotation.z = Input.compass.trueHeading;
+		longitude = Input.location.lastData.longitude;
+		latitude = Input.location.lastData.latitude;
+		altitude = Input.location.lastData.altitude;
+		rotation.y = Input.compass.trueHeading;
 	}
 
 }

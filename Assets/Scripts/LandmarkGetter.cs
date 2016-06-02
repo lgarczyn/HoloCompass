@@ -7,13 +7,19 @@ public class LandmarkGetter : MonoBehaviour {
 	static public List<Landmark> landmarks;
 	public List<Landmark> landmarksGUI;
 
-	static public event System.Action OnLandmarkUpdate;
+	static public event System.Action<List<Landmark>> OnLandmarkUpdate;
 
 	void Start ()
 	{
 		TextAsset urlAsset = Resources.Load("url") as TextAsset;
+
+		string url = urlAsset.text;
+
+		url = url.Replace ("<KEY>", "lkoi2xh39wNrb7DbCF7ENlp1Q5R8hs3K7fEjjfwv");
+		url = url.Replace ("<LAT>", LocationTracker.latitude.ToString());
+		url = url.Replace ("<LON>", LocationTracker.longitude.ToString());
 		
-		StartCoroutine (WWWCoroutine(urlAsset.text));
+		StartCoroutine (WWWCoroutine(url));
 	}
 
 	IEnumerator WWWCoroutine (string url)
@@ -30,7 +36,7 @@ public class LandmarkGetter : MonoBehaviour {
 		landmarks = ReadData (data);
 		landmarksGUI = landmarks;
 
-		OnLandmarkUpdate ();
+		OnLandmarkUpdate (landmarks);
 	}
 
 	static List<Landmark> ReadData(string JSONData)
