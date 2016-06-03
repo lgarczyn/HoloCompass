@@ -6,7 +6,7 @@
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
 	<RootNamespace></RootNamespace>
-	<ProjectGuid>{B17FA6CE-EE63-0799-EF2E-1725C3F99F01}</ProjectGuid>
+	<ProjectGuid>{AA969ACC-1962-DE80-430B-7DD99A09C341}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<AssemblyName>Assembly-CSharp</AssemblyName>
@@ -49,8 +49,10 @@
      <Compile Include="Assets\JSON\JSONTemplates.cs" />
      <Compile Include="Assets\JSON\VectorTemplates.cs" />
      <Compile Include="Assets\Scripts\LandmarkGetter.cs" />
+     <Compile Include="Assets\Scripts\LandmarkSprite.cs" />
      <Compile Include="Assets\Scripts\LandmarksDisplay.cs" />
      <Compile Include="Assets\Scripts\LocationTracker.cs" />
+     <Compile Include="Assets\Scripts\MonoBehaviourExtensions.cs" />
      <Compile Include="Assets\Scripts\WebcamImageLoader.cs" />
      <None Include="Assets\Resources\url.txt" />
      <None Include="Assets\JSON\readme.txt" />

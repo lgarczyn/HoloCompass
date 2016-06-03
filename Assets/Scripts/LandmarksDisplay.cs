@@ -6,10 +6,11 @@ using System.Linq;
 
 public class LandmarksDisplay : MonoBehaviour
 {
-	public List<Transform> landmarks;
+	public List<LandmarkSprite> landmarks;
 
-	public Camera camera;
-	public GameObject prefab;
+	public Camera mainCamera;
+	public RectTransform labelParent;
+	public GameObject spritePrefab;
 	public Vector3 rotOffset;
 
 	void Start ()
@@ -19,26 +20,28 @@ public class LandmarksDisplay : MonoBehaviour
 
 	void UpdateLandmarks (List<Landmark> landmarkData)
 	{
-		camera.transform.position = GetWorldCoordinates(landmarkData [0].longitude, landmarkData [0].latitude);
+		mainCamera.transform.position = GetWorldCoordinates(landmarkData [0].longitude, landmarkData [0].latitude);
 
-		landmarks = new List<Transform>();
+		landmarks = new List<LandmarkSprite>();
 
 		foreach (Landmark landmark in landmarkData)
 		{
-			Transform t = GameObject.Instantiate(prefab).GetComponent<Transform>();
-			landmarks.Add(t);
-			t.SetParent(transform, false);
+			LandmarkSprite sprite = Instantiate(spritePrefab).GetComponent<LandmarkSprite>();
 
-			t.transform.position = GetWorldCoordinates(landmark.longitude, landmark.latitude);
+			sprite.transform.SetParent(transform, false);
+			sprite.transform.position = GetWorldCoordinates(landmark.longitude, landmark.latitude);
 
+			sprite.Setup(landmark.name, labelParent, mainCamera);
+
+			landmarks.Add(sprite);
 		}
 	}
 
-	void Update()
+	void LateUpdate()
 	{
-		camera.transform.position = GetWorldCoordinates (LocationTracker.longitude, LocationTracker.altitude, LocationTracker.latitude);
+		mainCamera.transform.position = GetWorldCoordinates (LocationTracker.longitude, LocationTracker.altitude, LocationTracker.latitude);
 		//camera.transform.rotation = Quaternion.Euler (LocationTracker.rotation + rotOffset);
-		camera.transform.rotation = Input.gyro.attitude;
+		mainCamera.transform.rotation = Input.gyro.attitude;
 
 	}
 

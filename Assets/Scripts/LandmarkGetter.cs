@@ -18,7 +18,8 @@ public class LandmarkGetter : MonoBehaviour {
 		url = url.Replace ("<KEY>", "lkoi2xh39wNrb7DbCF7ENlp1Q5R8hs3K7fEjjfwv");
 		url = url.Replace ("<LAT>", LocationTracker.latitude.ToString());
 		url = url.Replace ("<LON>", LocationTracker.longitude.ToString());
-		
+
+		Debug.Log (url);
 		StartCoroutine (WWWCoroutine(url));
 	}
 

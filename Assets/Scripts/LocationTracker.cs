@@ -9,12 +9,15 @@ public class LocationTracker : MonoBehaviour
 	static public float longitude;
 	static public float latitude;
 	static public float altitude;
-	static public Vector3 rotation;
+	static public float rotation;
+	static public Quaternion attitude;
 
-	void Start()
+	void Awake()
 	{
 		//Use real GPS?
 		Input.location.Start(0, 0);
+		Input.gyro.enabled=true;
+		Update ();
 	}
 
 	void Update()
@@ -34,7 +37,11 @@ public class LocationTracker : MonoBehaviour
 		longitude = Input.location.lastData.longitude;
 		latitude = Input.location.lastData.latitude;
 		altitude = Input.location.lastData.altitude;
-		rotation.y = Input.compass.trueHeading;
+		rotation = Input.compass.trueHeading;
+		attitude = Input.gyro.attitude;
+
+		latitude = 43.2641532f;
+		longitude = -0.5886227f;
 	}
 
 }
