@@ -18,8 +18,9 @@ public class WebcamImageLoader : MonoBehaviour {
 		cameraTexture = new WebCamTexture(backCamName);
 
 		GetComponent<RawImage>().texture = cameraTexture;
+        GetComponent<RawImage>().enabled = true;
 
-		cameraTexture.Play();
+        cameraTexture.Play();
 
 		//Handle no camera found
 		//Handle warp

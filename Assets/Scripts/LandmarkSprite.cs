@@ -9,6 +9,7 @@ public class LandmarkSprite : MonoBehaviour
 	static HashSet<LandmarkSprite> sprites = new HashSet<LandmarkSprite>();
 
 	public GameObject LabelPrefab;
+    float lastForce = 0;
 
 	Camera mainCamera;
 	Text label;
@@ -33,18 +34,38 @@ public class LandmarkSprite : MonoBehaviour
 
 			anchor.x = RectTransformUtility.WorldToScreenPoint(mainCamera, transform.position).x;
 
-			float force = -label.rectTransform.anchoredPosition.y / 100;
+
+            Rect labelRect = label.rectTransform.rect;
+            labelRect.position = label.rectTransform.anchoredPosition;
+            float force = -label.rectTransform.anchoredPosition.y / 100;
 
 			foreach(LandmarkSprite other in sprites)
 			{
-				Rect labelRect = label.rectTransform.rect;
+                if (other == this)
+                    continue;
 				Rect otherRect = other.label.rectTransform.rect;
-				if (labelRect.Overlaps(otherRect))
+                otherRect.position = other.label.rectTransform.anchoredPosition;
+                if (labelRect.Overlaps(otherRect))
 				{
-					force += (labelRect.center.y > otherRect.center.y) ? 4 : -4;
+                    if (labelRect.center.y > otherRect.center.y)
+                    {
+                        force += (otherRect.yMax - labelRect.yMin) / 10;
+                    }
+                    else if (labelRect.center.y < otherRect.center.y)
+                    {
+                        force += (otherRect.yMin - labelRect.yMax) / 10;
+                    }
+                    else
+                    {
+                        force += Random.Range(-1f, 1f);
+                    }
 				}
 			}
-			label.rectTransform.anchoredPosition += new Vector2(0, force);
+            lastForce = Mathf.Lerp(lastForce, force, 0.1f);
+            anchor.y += force;
+            lastForce *= 0.9f;
+
+            label.rectTransform.anchoredPosition = anchor;
 		}
 	}
 
