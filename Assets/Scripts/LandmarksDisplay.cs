@@ -11,7 +11,6 @@ public class LandmarksDisplay : MonoBehaviour
 	public Camera mainCamera;
 	public RectTransform labelParent;
 	public GameObject spritePrefab;
-	public Vector3 rotOffset;
 
 	void Start ()
 	{
@@ -40,9 +39,6 @@ public class LandmarksDisplay : MonoBehaviour
 	void LateUpdate()
 	{
 		mainCamera.transform.position = GetWorldCoordinates (LocationTracker.longitude, LocationTracker.latitude, LocationTracker.altitude);
-		//camera.transform.rotation = Quaternion.Euler (LocationTracker.rotation + rotOffset);
-		mainCamera.transform.rotation = Input.gyro.attitude;
-
 	}
 
 

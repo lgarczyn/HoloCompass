@@ -30,14 +30,15 @@ public class LandmarkSprite : MonoBehaviour
 	{
 		if (label)
 		{
-			Vector2 anchor = label.rectTransform.anchoredPosition;
-
-			anchor.x = RectTransformUtility.WorldToScreenPoint(mainCamera, transform.position).x;
-
+			Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(mainCamera, transform.position);
+            Vector2 idealPos;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(label.transform.parent as RectTransform, screenPos, mainCamera, out idealPos);
+            Vector2 currentPos = label.rectTransform.anchoredPosition;
 
             Rect labelRect = label.rectTransform.rect;
             labelRect.position = label.rectTransform.anchoredPosition;
-            float force = -label.rectTransform.anchoredPosition.y / 100;
+
+            float force = (idealPos.y - currentPos.y) / 100;
 
 			foreach(LandmarkSprite other in sprites)
 			{
@@ -61,11 +62,9 @@ public class LandmarkSprite : MonoBehaviour
                     }
 				}
 			}
-            lastForce = Mathf.Lerp(lastForce, force, 0.1f);
-            anchor.y += force;
-            lastForce *= 0.9f;
+            Vector2 newPos = new Vector2(idealPos.x, currentPos.y + force);
 
-            label.rectTransform.anchoredPosition = anchor;
+            label.rectTransform.anchoredPosition = newPos;
 		}
 	}
 
